@@ -13,7 +13,8 @@ $icon-font-path: '../fonts/';
 
 /* Space out content a bit */
 body {
-  padding-top: 20px;
+  // Added Top-fixed navbar
+  padding-top: 70px;
   padding-bottom: 20px;
 }
 
