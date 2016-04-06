@@ -5,11 +5,11 @@ $icon-font-path: '../fonts/';
 // endbower
 
 // Plugins
-@import "plugins/sidebar.css";
+@import "plugins/sidebar";
 
 // Variables
-@import "variables.scss";
+@import "partials/variables";
 
-@import "page.scss";
-@import "map.scss";
-@import "helper.scss";
+@import "partials/page";
+@import "partials/map";
+@import "partials/helper";

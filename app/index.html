@@ -44,34 +44,16 @@
 
 		<div id="wrapper">
 			<div id="sidebar-wrapper">
-				<ul class="sidebar-nav">
+				<div class="sidebar-nav">
+					<form>
+						<div class="form-group">
+							<input type="text" class="form-control" id="filter" placeholder="Filter Locations">
+						</div>
+					</form>
+				</div>
+				<ul class="sidebar-nav" data-bind="foreach: locations">
 					<li>
-						<form>
-							 <div class="form-group">
-							 	<input type="text" class="form-control" id="filter" placeholder="Filter Locations">
-							 </div>
-						</form>
-					</li>
-					<li>
-						<a href="#">Dashboard</a>
-					</li>
-					<li>
-						<a href="#">Shortcuts</a>
-					</li>
-					<li>
-						<a href="#">Overview</a>
-					</li>
-					<li>
-						<a href="#">Events</a>
-					</li>
-					<li>
-						<a href="#">About</a>
-					</li>
-					<li>
-						<a href="#">Services</a>
-					</li>
-					<li>
-						<a href="#">Contact</a>
+						<a href="#" data-bind="text: name"></a>
 					</li>
 				</ul>
 			</div>
@@ -89,6 +71,7 @@
 		<!-- endbuild -->
 
 		<!-- build:js scripts/plugins.js -->
+		<!-- Bootstrap -->
 		<script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/affix.js"></script>
 		<script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/alert.js"></script>
 		<script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/dropdown.js"></script>
@@ -101,11 +84,15 @@
 		<script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/scrollspy.js"></script>
 		<script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/collapse.js"></script>
 		<script src="/bower_components/bootstrap-sass/assets/javascripts/bootstrap/tab.js"></script>
+
+		<!-- Knockout -->
+		<script src="/bower_components/knockout/dist/knockout.js"></script>
 		<!-- endbuild -->
 
 		<!-- build:js scripts/main.js -->
-		<script src="scripts/main.js"></script>
+		<script src="scripts/interface.js"></script>
 		<script src="scripts/map.js"></script>
+		<script src="scripts/main.js"></script>
 		<!-- endbuild -->
 
 		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOvT4WRm8Y1FRgoZZaKo-7M71f1AbNEvI&callback=initMap"
