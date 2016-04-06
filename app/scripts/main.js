@@ -5,9 +5,17 @@
 		var locations = json.locations;
 
 		function AppViewModel() {
+			var vm = this;
 			this.locations = ko.observableArray(locations);
-			console.log(typeof locations);
-			console.log(this.locations());
+			this.filter = ko.observable('');
+
+			//Compute the locations that needs to be displayed.
+			this.filteredLocations = ko.computed(function () {
+				return vm.locations().filter(function (location) {
+					// Compare the location names with the given filter, case insensitively
+					return location.name.toLowerCase().indexOf(vm.filter().toLowerCase()) > -1;
+				});
+			});
 		}
 
 		ko.applyBindings(new AppViewModel());
