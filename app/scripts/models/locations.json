@@ -1,8 +1,32 @@
 {"locations":[
 	{
-		"name": "Kowloon Walled City"
+		"name": "Kowloon Walled City Park"
 	},
 	{
 		"name": "Hong Kong Disneyland"
+	},
+	{
+		"name": "Ocean Park"
+	},
+	{
+		"name": "Hong Kong Cultral Centre"
+	},
+	{
+		"name": "Victoria Peak"
+	},
+	{
+		"name": "Lion Rock"
+	},
+	{
+		"name": "Time Square"
+	},
+	{
+		"name": "Hong Kong Central Library"
+	},
+	{
+		"name": "Stanley Market"
+	},
+	{
+		"name": "University of Hong Kong"
 	}
 ]}
