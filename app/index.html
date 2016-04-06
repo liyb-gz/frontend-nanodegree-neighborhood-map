@@ -52,8 +52,8 @@
 					</form>
 				</div>
 				<ul class="sidebar-nav" data-bind="foreach: filteredLocations">
-					<li>
-						<a href="#" data-bind="text: name"></a>
+					<li data-bind="css: {active: isActive}">
+						<a href="#" data-bind="text: name, click: $parent.resetCurrentLocation"></a>
 					</li>
 				</ul>
 			</div>
@@ -95,7 +95,5 @@
 		<script src="scripts/main.js"></script>
 		<!-- endbuild -->
 
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOvT4WRm8Y1FRgoZZaKo-7M71f1AbNEvI&callback=initMap"
-		async defer></script>
 	</body>
 </html>
