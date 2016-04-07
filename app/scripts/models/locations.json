@@ -1,8 +1,72 @@
 {"locations":[
 	{
-		"name": "Kowloon Walled City"
+		"name": "Kowloon Walled City Park",
+		"coordinates": {
+			"lat": 22.332040,
+			"lng": 114.190232
+		}
 	},
 	{
-		"name": "Hong Kong Disneyland"
+		"name": "Hong Kong Disneyland",
+		"coordinates": {
+			"lat": 22.312947,
+			"lng": 114.041271
+		}
+	},
+	{
+		"name": "Ocean Park",
+		"coordinates": {
+			"lat": 22.246653,
+			"lng": 114.175718
+		}
+	},
+	{
+		"name": "Hong Kong Cultral Centre",
+		"coordinates": {
+			"lat": 22.294077,
+			"lng": 114.170390
+		}
+	},
+	{
+		"name": "Victoria Peak",
+		"coordinates": {
+			"lat": 22.275897,
+			"lng": 114.145537
+		}
+	},
+	{
+		"name": "Lion Rock",
+		"coordinates": {
+			"lat": 22.352279,
+			"lng": 114.187024
+		}
+	},
+	{
+		"name": "Time Square",
+		"coordinates": {
+			"lat": 22.278238,
+			"lng": 114.182181
+		}
+	},
+	{
+		"name": "Hong Kong Central Library",
+		"coordinates": {
+			"lat": 22.279912,
+			"lng": 114.189686
+		}
+	},
+	{
+		"name": "Stanley Market",
+		"coordinates": {
+			"lat": 22.218484,
+			"lng": 114.211558
+		}
+	},
+	{
+		"name": "University of Hong Kong",
+		"coordinates": {
+			"lat": 22.283009,
+			"lng": 114.137106
+		}
 	}
 ]}
