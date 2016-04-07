@@ -47,11 +47,11 @@
 				<div class="sidebar-nav">
 					<form id="filter-form">
 						<div class="form-group">
-							<input type="text" data-bind="value: filterKeyword" class="form-control" id="filter" placeholder="Filter Locations">
+							<input type="text" data-bind="value: filterKeyword, valueUpdate: 'keyup'" class="form-control" id="filter" placeholder="Filter Locations">
 						</div>
 					</form>
 				</div>
-				<ul class="sidebar-nav" data-bind="foreach: locations">
+				<ul class="sidebar-nav" data-bind="foreach: filteredLocations">
 					<li data-bind="css: {active: isActive}">
 						<a href="#" data-bind="text: name, click: setActive"></a>
 					</li>

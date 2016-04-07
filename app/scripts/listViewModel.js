@@ -10,6 +10,12 @@ function ListViewModel (locations) {
 	self.currentLocation = ko.observable();
 	self.filterKeyword = ko.observable('');
 
+	self.filteredLocations = ko.computed(function () {
+		return self.locations().filter(function (location) {
+			return location.name.toLowerCase().indexOf(self.filterKeyword().toLowerCase()) > -1;
+		});
+	}, self);
+
 	// Define methods
 	self.sortLocations = function () {
 		self.locations.sort(function (locA, locB) {
