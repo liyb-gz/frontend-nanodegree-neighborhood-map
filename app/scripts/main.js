@@ -1,59 +1,69 @@
 (function () {
 	'use strict';
 
-	$.getJSON('scripts/models/locations.json', function(json) {
-		var locations = json.locations;
+	$.when(
 
-		function AppViewModel() {
-			var vm = this;
-			this.locations = loadLocations(locations);
-			this.currentLocation = ko.observable(this.locations()[0]); //Initially, show the first location
-			this.filter = ko.observable('');
+		// Load the locations
+		$.getJSON('scripts/models/locations.json', function(json) {
+			var locations = json.locations;
 
-			//Compute the locations that needs to be displayed.
-			this.filteredLocations = ko.computed(function () {
-				return this.locations().filter(function (location) {
-					// Compare the location names with the given filter, case insensitively
-					return location.name.toLowerCase().indexOf(vm.filter().toLowerCase()) > -1;
+			function AppViewModel() {
+				var vm = this;
+				this.locations = loadLocations(locations);
+				this.currentLocation = ko.observable(this.locations()[0]); //Initially, show the first location
+				this.filter = ko.observable('');
+
+				//Compute the locations that needs to be displayed.
+				this.filteredLocations = ko.computed(function () {
+					return this.locations().filter(function (location) {
+						// Compare the location names with the given filter, case insensitively
+						return location.name.toLowerCase().indexOf(vm.filter().toLowerCase()) > -1;
+					});
+				}, this);
+
+				this.resetCurrentLocation = function () {
+					vm.currentLocation(this);
+				};
+
+				this.locations().forEach(function (location) {
+					location.isActive = ko.computed(function () {
+						return this === vm.currentLocation();
+					}, location);
 				});
-			}, this);
+			}
 
-			this.resetCurrentLocation = function () {
-				vm.currentLocation(this);
-			};
+			// Load locations from the JSON file.
+			function loadLocations(locs) {
+				var locations = ko.observableArray(locs);
 
-			this.locations().forEach(function (location) {
-				location.isActive = ko.computed(function () {
-					return this === vm.currentLocation();
-				}, location);
-			});
-		}
+				// Sort locations by alphabetical order.
+				locations().sort(function (a, b) {
+					if (a.name > b.name) {
+						return 1;
+					} else if (a.name < b.name) {
+						return -1;
+					} else {
+						return 0;
+					}
+				});
 
-		// Load locations from the JSON file.
-		function loadLocations(locs) {
-			var locations = ko.observableArray(locs);
+				return locations;
+			}
 
-			// Sort locations by alphabetical order.
-			locations().sort(function (a, b) {
-				if (a.name > b.name) {
-					return 1;
-				} else if (a.name < b.name) {
-					return -1;
-				} else {
-					return 0;
-				}
-			});
+			ko.applyBindings(new AppViewModel());
 
-			return locations;
-		}
+		}),
 
-		ko.applyBindings(new AppViewModel());
+		// Load the google map
+		$.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCOvT4WRm8Y1FRgoZZaKo-7M71f1AbNEvI', function() {
+			initMap();
+		})
 
-		// loadMarkers();
-	});
+	// When both the locations and the google map are loaded, do the following
+	).then(function () {
+		// But how am I suppose to access the models here?
+		console.log('both loc and map loaded');
 
-	$.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCOvT4WRm8Y1FRgoZZaKo-7M71f1AbNEvI', function(data, textStatus, jqxhr) {
-		initMap();
 	});
 
 })();
