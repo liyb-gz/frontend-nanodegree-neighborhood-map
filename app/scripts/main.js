@@ -7,8 +7,8 @@
 
 	//Initialize the map
 	function init() {
-		initMap();
-		var listViewModel = new ListViewModel(locations);
+		var mapViewModel = new MapViewModel();
+		var listViewModel = new ListViewModel(locations, mapViewModel);
 		ko.applyBindings(listViewModel);
 	}
 
@@ -21,6 +21,7 @@
 		}),
 
 		//Load Google map
+		//key=AIzaSyCOvT4WRm8Y1FRgoZZaKo-7M71f1AbNEvI
 		$.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCOvT4WRm8Y1FRgoZZaKo-7M71f1AbNEvI')
 
 	).then(function () {
