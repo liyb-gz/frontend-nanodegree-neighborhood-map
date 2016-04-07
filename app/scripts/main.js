@@ -7,8 +7,8 @@
 
 	//Initialize the map
 	function init() {
-		var mapViewModel = new MapViewModel();
-		var listViewModel = new ListViewModel(locations, mapViewModel);
+		map = new Map();
+		var listViewModel = new ListViewModel(locations);
 		ko.applyBindings(listViewModel);
 	}
 

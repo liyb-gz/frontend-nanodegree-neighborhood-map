@@ -2,7 +2,7 @@
 'use strict';
 
 // @param locations - Array
-function ListViewModel (locations, map) {
+function ListViewModel (locations) {
 	var self = this;
 
 	// Define observables
@@ -45,7 +45,7 @@ function ListViewModel (locations, map) {
 
 	// Load locations
 	locations.forEach(function (location) {
-		self.locations.push(new LocViewModel(location, self, map));
+		self.locations.push(new LocViewModel(location, self));
 	});
 
 	self.sortLocations();

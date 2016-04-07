@@ -3,7 +3,7 @@
 
 // @param location - Object
 // @param list - ListViewModel that contains this LocViewModel
-function LocViewModel (location, list, map) {
+function LocViewModel (location, list) {
 	var self = this;
 
 	// These variables don't change, so no need to use observables.
@@ -12,6 +12,9 @@ function LocViewModel (location, list, map) {
 	self.list = list;
 
 	self.marker = map.addMarker(self);
+	self.marker.addListener('click', function () {
+		self.setActive();
+	});
 
 	// Observables
 	self.isActive = ko.observable(false); //false by default
@@ -26,6 +29,7 @@ function LocViewModel (location, list, map) {
 		map.panTo(self);
 
 		// Markers
+		self.marker.bounce();
 		// map.resetMarkers();
 		// self.marker.setActive();
 	};
