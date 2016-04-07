@@ -45,15 +45,15 @@
 		<div id="wrapper">
 			<div id="sidebar-wrapper">
 				<div class="sidebar-nav">
-					<form>
+					<form id="filter-form">
 						<div class="form-group">
 							<input type="text" class="form-control" id="filter" placeholder="Filter Locations">
 						</div>
 					</form>
 				</div>
 				<ul class="sidebar-nav" data-bind="foreach: locations">
-					<li>
-						<a href="#" data-bind="text: name"></a>
+					<li data-bind="css: {active: isActive}">
+						<a href="#" data-bind="text: name, click: setActive"></a>
 					</li>
 				</ul>
 			</div>
@@ -91,11 +91,10 @@
 
 		<!-- build:js scripts/main.js -->
 		<script src="scripts/interface.js"></script>
+		<script src="scripts/locViewModel.js"></script>
+		<script src="scripts/listViewModel.js"></script>
 		<script src="scripts/map.js"></script>
 		<script src="scripts/main.js"></script>
 		<!-- endbuild -->
-
-		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOvT4WRm8Y1FRgoZZaKo-7M71f1AbNEvI&callback=initMap"
-		async defer></script>
 	</body>
 </html>

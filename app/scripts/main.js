@@ -1,16 +1,31 @@
+/* globals $, google, ko, console*/
+
 (function () {
 	'use strict';
 
-	$.getJSON('scripts/models/locations.json', function(json, textStatus) {
-		var locations = json.locations;
+	var locations;
 
-		function AppViewModel() {
-			this.locations = ko.observableArray(locations);
-			console.log(typeof locations);
-			console.log(this.locations());
-		}
+	//Initialize the map
+	function init() {
+		initMap();
+		var listViewModel = new ListViewModel(locations);
+		ko.applyBindings(listViewModel);
+	}
 
-		ko.applyBindings(new AppViewModel());
+	// Codes that inits the app
+	$.when(
+
+		//Load JSON that stores locations
+		$.getJSON('scripts/models/locations.json', function(json) {
+			locations = json.locations;
+		}),
+
+		//Load Google map
+		$.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCOvT4WRm8Y1FRgoZZaKo-7M71f1AbNEvI')
+
+	).then(function () {
+		//Init the app when both locations and map are ready
+		init();
 	});
 
 })();
