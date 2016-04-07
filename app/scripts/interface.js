@@ -1,3 +1,6 @@
+// JShint directives
+/* globals $ */
+
 // JS to support interface features only
 (function () {
 	'use strict';

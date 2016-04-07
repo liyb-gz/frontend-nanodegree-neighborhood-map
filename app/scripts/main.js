@@ -1,3 +1,6 @@
+// JShint directives
+/* globals $, google, ko, console */
+
 (function () {
 	'use strict';
 
@@ -29,7 +32,7 @@
 				return this === vm.currentLocation();
 			}, location);
 		});
-	}
+	};
 
 	// Load locations from the JSON file and preprocess.
 	function initLocations(locs) {
@@ -49,13 +52,19 @@
 		return locations;
 	}
 
-	function initMap() {
+	function initMap(initLoc, zoomLevel) {
 		var mapDiv = document.getElementById('map');
 
-		map = new google.maps.Map(mapDiv, {
-			center: {lat: -34.397, lng: 150.644},
-			zoom: 8
+		var map = new google.maps.Map(mapDiv, {
+			center: initLoc.coordinates,
+			zoom: zoomLevel
 		});
+
+		return map;
+	}
+
+	function initMarkers() {
+		var markers = [];
 
 		markers.push(new google.maps.Marker({
 			position: {
@@ -72,8 +81,10 @@
 				lng: 114.190232
 			},
 			map: map,
-			title: 'hello!'
+			title: 'hello!2222222'
 		}));
+
+		return markers;
 	}
 
 	$.when(
@@ -85,13 +96,12 @@
 		}),
 
 		// Load the google map
-		$.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCOvT4WRm8Y1FRgoZZaKo-7M71f1AbNEvI', function() {
-			initMap();
-		})
+		$.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCOvT4WRm8Y1FRgoZZaKo-7M71f1AbNEvI')
 
 	// When both the locations and the google map are loaded, do the following
 	).then(function () {
-		console.log('both loc and map loaded');
+		map = initMap(locations()[0], 12); //Choose the first location to be loaded
+		markers = initMarkers();
 	});
 
 })();
