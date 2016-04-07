@@ -5,33 +5,39 @@
 	'use strict';
 
 	var locations; //Model
-	var AppViewModel; //ViewModel
+	var viewModel; //ViewModel
 	var map; //View 1
 	var markers = []; //View 2
 
-	AppViewModel = function (locations) {
-		var vm = this;
-		this.locations = locations;
-		this.currentLocation = ko.observable(this.locations()[0]); //Initially, show the first location
-		this.filter = ko.observable('');
+	var AppViewModel = function (locations, map, markers) {
+		var self = this;
+		self.locations = locations;
+		self.map = map;
+		self.markers = markers;
+		self.currentLocation = ko.observable(self.locations()[0]); //Initially, show the first location
+		self.filter = ko.observable('');
 
 		//Compute the locations that needs to be displayed.
-		this.filteredLocations = ko.computed(function () {
+		self.filteredLocations = ko.computed(function () {
 			return this.locations().filter(function (location) {
 				// Compare the location names with the given filter, case insensitively
-				return location.name.toLowerCase().indexOf(vm.filter().toLowerCase()) > -1;
+				return location.name.toLowerCase().indexOf(self.filter().toLowerCase()) > -1;
 			});
 		}, this);
 
-		this.resetCurrentLocation = function () {
-			vm.currentLocation(this);
-		};
-
-		this.locations().forEach(function (location) {
+		self.locations().forEach(function (location) {
 			location.isActive = ko.computed(function () {
-				return this === vm.currentLocation();
+				return this === self.currentLocation();
 			}, location);
 		});
+
+		self.resetCurrentLocation = function () {
+			self.currentLocation(this);
+		};
+
+		self.getCurrentLocation = function () {
+			return self.currentLocation();
+		};
 	};
 
 	// Load locations from the JSON file and preprocess.
@@ -63,30 +69,21 @@
 		return map;
 	}
 
-	function initMarkers() {
+	function initMarkers(locations, map) {
 		var markers = [];
 
-		markers.push(new google.maps.Marker({
-			position: {
-				lat: 22.332040,
-				lng: 114.190232
-			},
-			map: map,
-			title: 'hello!'
-		}));
-
-		markers.push(new google.maps.Marker({
-			position: {
-				lat: 22.352040,
-				lng: 114.190232
-			},
-			map: map,
-			title: 'hello!2222222'
-		}));
+		locations().forEach(function (location) {
+			markers.push(new google.maps.Marker({
+				position: location.coordinates,
+				map: map,
+				title: location.name
+			}));
+		});
 
 		return markers;
 	}
 
+	//Load files and init
 	$.when(
 
 		// Load the locations
@@ -101,7 +98,7 @@
 	// When both the locations and the google map are loaded, do the following
 	).then(function () {
 		map = initMap(locations()[0], 12); //Choose the first location to be loaded
-		markers = initMarkers();
+		markers = initMarkers(locations, map);
 	});
 
 })();
