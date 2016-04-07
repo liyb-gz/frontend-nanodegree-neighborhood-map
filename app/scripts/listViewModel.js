@@ -8,6 +8,7 @@ function ListViewModel (locations) {
 	// Define observables
 	self.locations = ko.observableArray();
 	self.currentLocation = ko.observable();
+	self.filterKeyword = ko.observable('');
 
 	// Define methods
 	self.sortLocations = function () {
@@ -31,7 +32,6 @@ function ListViewModel (locations) {
 	self.resetLocation = function () {
 		self.locations().forEach(function (location) {
 			location.resetActive();
-			console.log(location);
 		});
 	};
 
