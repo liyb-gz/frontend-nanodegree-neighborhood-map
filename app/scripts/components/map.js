@@ -25,6 +25,8 @@ function Map () {
 			icon: redMarker
 		});
 
+		newMarker.animationTimeout = null;
+
 		// Add useful operations to the marker here.
 		// newMarker.functionName = function () {}
 		newMarker.drop = function () {
@@ -33,7 +35,7 @@ function Map () {
 
 		newMarker.bounce = function (callback) {
 			this.setAnimation(google.maps.Animation.BOUNCE);
-			setTimeout(function (marker) {
+			this.animationTimeout = setTimeout(function (marker) {
 				marker.setAnimation(null);
 				callback();
 			}, 1400, this); // Marker bouncing: 700ms per circle
@@ -59,6 +61,7 @@ function Map () {
 		self.markers.forEach(function (marker) {
 			marker.resetAnimation();
 			marker.resetActive();
+			clearTimeout(marker.animationTimeout);
 		});
 	};
 
