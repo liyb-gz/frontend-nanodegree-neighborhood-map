@@ -28,7 +28,6 @@ function Map () {
 		newMarker.animationTimeout = null;
 
 		// Add useful operations to the marker here.
-		// newMarker.functionName = function () {}
 		newMarker.drop = function () {
 			this.setAnimation(google.maps.Animation.DROP);
 		};
@@ -67,7 +66,7 @@ function Map () {
 
 	self.addInfoWindow = function (locViewModel) {
 		var newInfoWindow = new google.maps.InfoWindow({
-			content: 'testing ' + locViewModel.name
+			content: '<div class="row"><div class="col-md-12"><div class="panel panel-default" id="loc"><div class="panel-heading">Testing Park 1</div><div class="panel-body"><div class="basic-info"><span class="cat">Park</span>,<span class="addr">Addr</span><br><span class="region">Sai Kung</span></div><img class="photo img-responsive" src="http://lorempixel.com/300/300/"></div></div></div></div>' + '<br> testing ' + locViewModel.name
 		});
 
 		newInfoWindow.setActive = function () {

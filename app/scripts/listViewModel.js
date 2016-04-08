@@ -43,6 +43,9 @@ function ListViewModel (locations) {
 	self.sortLocations();
 
 	// The first location highlighted by default
-	self.setCurrentLocation(self.locations()[0]);
 	self.locations()[0].setActive();
+
+	// Testing
+	// TODO: delete testing codes here
+	console.log(self.currentLocation());
 }

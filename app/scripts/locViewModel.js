@@ -9,6 +9,7 @@ function LocViewModel (location, list) {
 	// These variables don't change, so no need to use observables.
 	self.name = location.name;
 	self.coordinates = location.coordinates;
+	self.foursquareID = location.foursquareID;
 	self.list = list;
 
 	self.marker = map.addMarker(self);
