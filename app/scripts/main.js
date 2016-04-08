@@ -1,4 +1,4 @@
-/* globals $, google, ko, console*/
+/* globals $, google, ko, console, map*/
 
 (function () {
 	'use strict';
@@ -7,6 +7,10 @@
 
 	//Initialize the map
 	function init() {
+		// The var map is defined as a global variable
+		// Note that this is a wrapper of the google map,
+		// Adding methods for operation on markers and info windows
+		// The google map itself is map.map
 		map = new Map();
 		var listViewModel = new ListViewModel(locations);
 		ko.applyBindings(listViewModel);

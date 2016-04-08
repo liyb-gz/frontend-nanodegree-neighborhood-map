@@ -1,4 +1,4 @@
-/* globals google*/
+/* globals google, console*/
 'use strict';
 var map;
 
@@ -15,11 +15,14 @@ function Map () {
 	self.infoWindows = [];
 
 	// Methods
-	self.addMarker = function (location) {
+	self.addMarker = function (locViewModel) {
+		var redMarker = 'http://maps.google.com/mapfiles/ms/icons/red.png';
+
 		var newMarker = new google.maps.Marker({
-			position: location.coordinates,
+			position: locViewModel.coordinates,
 			map: self.map,
-			title: location.name
+			title: locViewModel.name,
+			icon: redMarker
 		});
 
 		// Add useful operations to the marker here.
@@ -28,24 +31,61 @@ function Map () {
 			this.setAnimation(google.maps.Animation.DROP);
 		};
 
-		newMarker.bounce = function () {
+		newMarker.bounce = function (callback) {
 			this.setAnimation(google.maps.Animation.BOUNCE);
 			setTimeout(function (marker) {
 				marker.setAnimation(null);
+				callback();
 			}, 1400, this); // Marker bouncing: 700ms per circle
-		}
+		};
+
+		newMarker.resetAnimation = function () {
+			this.setAnimation(null);
+		};
+
+		newMarker.setActive = function () {
+			this.setIcon(null);
+		};
+
+		newMarker.resetActive = function () {
+			this.setIcon(redMarker);
+		};
 
 		self.markers.push(newMarker);
 		return newMarker;
 	};
 
-	// TODO: map.resetAnimations
-	// TODO: map.resetMarkers
-	// TODO: marker.setActive
+	self.resetMarkers = function () {
+		self.markers.forEach(function (marker) {
+			marker.resetAnimation();
+			marker.resetActive();
+		});
+	};
+
+	self.addInfoWindow = function (locViewModel) {
+		var newInfoWindow = new google.maps.InfoWindow({
+			content: 'testing ' + locViewModel.name
+		});
+
+		newInfoWindow.setActive = function () {
+			this.open(self.map, locViewModel.marker);
+		};
+
+		self.infoWindows.push(newInfoWindow);
+		return newInfoWindow;
+	};
+
+	self.resetInfoWindows = function () {
+		self.infoWindows.forEach(function (infoWindows) {
+			infoWindows.close();
+		});
+	};
 
 	self.panTo = function (location) {
 		self.map.panTo(location.coordinates);
-	}
+	};
 
 	// Execute
+
+	// Testing
 }
