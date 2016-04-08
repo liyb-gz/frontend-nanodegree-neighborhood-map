@@ -26,6 +26,30 @@
 		<!--[if lt IE 10]>
 			<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/?locale=en">upgrade your browser</a> to improve your experience.</p>
 		<![endif]-->
+		<script type="text/html" id="infoWindowTemplate">
+			<div class="row" data-bind="with: currentLocation">
+				<div class="col-md-12" data-bind="with: foursquareInfo">
+					<h3>
+						<span data-bind="text: name"></span> <br>
+						<small data-bind="foreach: categories">
+							<span class="label label-info" data-bind="text: name"></span>
+						</small>
+					</h3>
+					<address data-bind="text: address"></address>
+					<div class="well">
+						<span class="rating label label-primary"><span data-bind="text: rating"></span> / <span class="total">10</span></span>
+						Based on <span data-bind="text: ratingSignals"></span> votes
+					</div>
+
+					<img data-bind="attr: {src: image, alt: name}" class="img-responsive">
+
+					<blockquote data-bind="with: comment">
+						<p data-bind="text: text"></p>
+						<footer data-bind="text: author"></footer>
+					</blockquote>
+				</div>
+			</div>
+		</script>
 
 		<nav class="navbar navbar-inverse navbar-fixed-top">
 			<div class="container-fluid">

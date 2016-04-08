@@ -66,11 +66,15 @@ function Map () {
 
 	self.addInfoWindow = function (locViewModel) {
 		var newInfoWindow = new google.maps.InfoWindow({
-			content: '<div class="row"><div class="col-md-12"><div class="panel panel-default" id="loc"><div class="panel-heading">Testing Park 1</div><div class="panel-body"><div class="basic-info"><span class="cat">Park</span>,<span class="addr">Addr</span><br><span class="region">Sai Kung</span></div><img class="photo img-responsive" src="http://lorempixel.com/300/300/"></div></div></div></div>' + '<br> testing ' + locViewModel.name
+			content: 'Loading information...'
 		});
 
 		newInfoWindow.setActive = function () {
 			this.open(self.map, locViewModel.marker);
+		};
+
+		newInfoWindow.updateContent = function (data) {
+			this.setContent(data);
 		};
 
 		self.infoWindows.push(newInfoWindow);

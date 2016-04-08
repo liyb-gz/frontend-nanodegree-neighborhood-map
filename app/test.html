@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Foursquare</title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<script   src="https://code.jquery.com/jquery-2.2.2.min.js"   integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI="   crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+</head>
+<body>
+<!-- <div class="container">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default" id="loc">
+				<div class="panel-heading">Testing Park 1</div>
+				<div class="panel-body">
+					<div class="basic-info">
+						<span class="cat">Park</span>,
+						<span class="addr">Addr</span><br>
+						<span class="region">Sai Kung</span>
+					</div>
+					<img class="photo img-responsive" src="http://lorempixel.com/300/300/">
+				</div>
+			</div>
+		</div>
+	</div>
+</div> -->
+
+<style>
+	.rating {
+		font-size: 120%;
+	}
+
+	.rating .total {
+		font-size: 65%;
+	}
+</style>
+
+<h3>
+	Kowloon Walled City Park 九龍寨城公園 <br>
+	<small>Park and Snack Place</small>
+</h3>
+<address>Tung Tsing Rd</address>
+<div class="well well-lg">
+	<span class="rating label label-primary">8.2 / <span class="total">10</span></span>
+	Based on 79 votes
+</div>
+
+<img src="http://lorempixel.com/300/300/" alt="" class="img-responsive">
+
+<blockquote>
+  <p>A strategic point on the peninsula since the 16C, this was a no man's land where illegal activity flourished for almost a century til it became a park in 1987. – Green Guide Editor</p>
+  <footer><a href="https://foursquare.com/michelinguides">Michelin Travel & Lifestyle</a></footer>
+</blockquote>
+
+
+
+
+<script>
+var testAPILink = 'https://api.foursquare.com/v2/venues/4d16934825cda14333d170d6?client_id=MSKSKL5MYNAFMGDCKJOLARZZFV2W4O0A50WJ0HMWFNHQ1YKO&client_secret=4LVCHEYQPLJTEAZ1GTMB3M3UUTIBYUVANJKBQ5IM334OZEV0&v=20130815';
+
+var returnContent = null;
+
+$.ajax(testAPILink)
+	.done(function (data) {
+		returnContent = data;
+		console.log('AJAX succeeded.');
+		console.log(data);
+		$('#loc .panel-heading').html(data.response.venue.name);
+		$('#loc .panel-body .cat').html(data.response.venue.categories[0].name);
+		$('#loc .panel-body .region').html(data.response.venue.location.city);
+		$('#loc .panel-body .addr').html(data.response.venue.location.address);
+		$('#loc .panel-body .photo').attr('src', data.response.venue.bestPhoto.prefix + '300x300' + data.response.venue.bestPhoto.suffix);
+	})
+	.fail(function () {
+		console.log('AJAX failed.');
+	})
+</script>
+</body>
+</html>

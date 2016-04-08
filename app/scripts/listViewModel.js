@@ -44,8 +44,4 @@ function ListViewModel (locations) {
 
 	// The first location highlighted by default
 	self.locations()[0].setActive();
-
-	// Testing
-	// TODO: delete testing codes here
-	console.log(self.currentLocation());
 }
