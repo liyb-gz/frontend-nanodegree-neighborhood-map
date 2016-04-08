@@ -30,15 +30,7 @@ function ListViewModel (locations) {
 	};
 
 	self.setCurrentLocation = function (location) {
-		self.resetLocation();
 		self.currentLocation(location);
-	};
-
-	// Cancels all active status of the locations.
-	self.resetLocation = function () {
-		self.locations().forEach(function (location) {
-			location.resetActive();
-		});
 	};
 
 	// Execute

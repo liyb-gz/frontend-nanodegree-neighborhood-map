@@ -19,13 +19,14 @@ function LocViewModel (location, list) {
 	self.infoWindow = map.addInfoWindow(self);
 
 	// Observables
-	self.isActive = ko.observable(false); //false by default
+	self.isActive = ko.computed(function () {
+		return this === this.list.currentLocation();
+	}, self);
 
 	// Methods
 	self.setActive = function () {
 		// List
 		self.list.setCurrentLocation(self);
-		self.isActive(true);
 
 		// Map
 		map.panTo(self);
@@ -39,9 +40,5 @@ function LocViewModel (location, list) {
 		self.marker.bounce(function () {
 			self.infoWindow.setActive();
 		}); //Set this marker to animate
-	};
-
-	self.resetActive = function () {
-		self.isActive(false);
 	};
 }
