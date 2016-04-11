@@ -1,4 +1,4 @@
-/* globals console, ko, map */
+/* globals console, ko, map, $ */
 'use strict';
 
 // @param location - Object
@@ -15,6 +15,7 @@ function LocViewModel (location, list) {
 	// Observables
 	self.foursquareInfo = ko.observable(); // Foursquare Information
 	self.foursquareInfoString = ko.computed(function () {
+	//Info Window content string based on self.foursquareInfo
 		if (this.foursquareInfo() === undefined) {
 			return 'Sorry, Information about this location cannot be retrieved.';
 		} else {
@@ -41,14 +42,39 @@ function LocViewModel (location, list) {
 			content += '<p>' + info.comment.text + '</p>';
 			content += '<footer>' + info.comment.author + '</footer>';
 			content += '</blockquote>';
+			content += '<p class="text-muted">Information provided by <a target="_blank" href="https://foursquare.com/v/' + this.foursquareID + '">Foursquare.com</a></p>';
 			return content;
 		}
 	}, self);
 
 	self.isActive = ko.computed(function () {
-		console.log(this === this.list.currentLocation());
 		return this === this.list.currentLocation();
 	}, self);
+
+	self.isOnList = ko.computed(function () {
+		return self.list.filteredLocations().indexOf(self) > -1;
+	});
+
+	// self.isActive.subscribe(function (active) {
+	// 	if (active) {
+
+	// 	} else {
+	// 		marker.resetAnimation();
+	// 		marker.resetActive();
+	// 		clearTimeout(marker.animationTimeout);
+	// 	}
+	// });
+
+	// Listener to the isOnList observable
+	self.isOnList.subscribe(function (onList) {
+		// Marker
+		self.marker.setVisible(onList);
+
+		// If not on the list, reset the active state
+		if (!onList) {
+			self.resetActive();
+		}
+	});
 
 	// Google Map Marker
 	self.marker = map.addMarker(self);
@@ -58,11 +84,6 @@ function LocViewModel (location, list) {
 
 	// Google Map InfoWindow
 	self.infoWindow = map.addInfoWindow(self);
-
-	// Testing
-	self.testing = ko.computed(function () {
-		return new Date() + self.isActive() + self.name;
-	}, self);
 
 	// Methods
 	self.setActive = function () {
@@ -82,6 +103,12 @@ function LocViewModel (location, list) {
 			// Do the following after bouncing
 			self.infoWindow.setActive();
 		}); //Set this marker to animate
+	};
+
+	self.resetActive = function () {
+		self.list.setCurrentLocation(undefined);
+		map.resetMarkers();
+		map.resetInfoWindows();
 	};
 
 	// Encapsulate the getJSON request
@@ -104,8 +131,8 @@ function LocViewModel (location, list) {
 				comment: json.response.venue.tips.groups ?
 					{ //May need data check later
 						text: json.response.venue.tips.groups[0].items[0].text,
-						author: json.response.venue.tips.groups[0].items[0].user.firstName + ' ' +
-						json.response.venue.tips.groups[0].items[0].user.lastName
+						author: json.response.venue.tips.groups[0].items[0].user.firstName ? json.response.venue.tips.groups[0].items[0].user.firstName : 'null' + ' ' +
+						json.response.venue.tips.groups[0].items[0].user.lastName ? json.response.venue.tips.groups[0].items[0].user.lastName : null
 					} : {
 						text: 'No comments yet.',
 						author: null

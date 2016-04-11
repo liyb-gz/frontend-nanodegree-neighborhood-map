@@ -9,7 +9,7 @@
         $("#wrapper").toggleClass("toggled");
     });
 
-    $("#filter-form").click(function(e) {
+    $("#filter-form").submit(function(e) {
         e.preventDefault();
     });
 })();

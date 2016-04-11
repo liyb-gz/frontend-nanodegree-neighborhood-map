@@ -16,6 +16,14 @@ function ListViewModel (locations) {
 		});
 	}, self);
 
+	// Listener to filteredLocations
+	self.filteredLocations.subscribe(function (newFilteredLocations) {
+		// Always center the map to the first location (if there is one)
+		if (newFilteredLocations.length > 0) {
+			map.panTo(newFilteredLocations[0]);
+		}
+	});
+
 	// Define methods
 	self.sortLocations = function () {
 		self.locations.sort(function (locA, locB) {
@@ -42,6 +50,6 @@ function ListViewModel (locations) {
 
 	self.sortLocations();
 
-	// The first location highlighted by default
-	self.locations()[0].setActive();
+	// The map centralizes the first location by default
+	map.panTo(self.locations()[0]);
 }

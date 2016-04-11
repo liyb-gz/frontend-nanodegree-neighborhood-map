@@ -58,6 +58,7 @@ function Map () {
 		return newMarker;
 	};
 
+	// TODO: refactor this function, make use of subscribe
 	self.resetMarkers = function () {
 		self.markers.forEach(function (marker) {
 			marker.resetAnimation();
@@ -83,6 +84,7 @@ function Map () {
 		return newInfoWindow;
 	};
 
+	// TODO: refactor this function, make use of subscribe
 	self.resetInfoWindows = function () {
 		self.infoWindows.forEach(function (infoWindows) {
 			infoWindows.close();
