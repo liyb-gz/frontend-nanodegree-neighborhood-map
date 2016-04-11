@@ -33,6 +33,12 @@ gulp.task('scripts', () => {
     .pipe(reload({stream: true}));
 });
 
+// Added task for JSON
+gulp.task('json', () => {
+  return gulp.src('app/scripts/models/**/*.json')
+    .pipe(gulp.dest('dist/scripts/models/'));
+});
+
 function lint(files, options) {
   return () => {
     return gulp.src(files)
@@ -159,7 +165,7 @@ gulp.task('wiredep', () => {
     .pipe(gulp.dest('app'));
 });
 
-gulp.task('build', ['lint', 'html', 'images', 'fonts', 'extras'], () => {
+gulp.task('build', ['lint', 'html', 'images', 'fonts', 'json','extras'], () => {
   return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
 });
 
