@@ -14,8 +14,39 @@ function LocViewModel (location, list) {
 
 	// Observables
 	self.foursquareInfo = ko.observable(); // Foursquare Information
+	self.foursquareInfoString = ko.computed(function () {
+		if (this.foursquareInfo() === undefined) {
+			return 'Sorry, Information about this location cannot be retrieved.';
+		} else {
+			// I tried, but I cannot figure out how to bind data to the info window.
+			// So here is the non-knockout way to inject the content into the info window.
+			var info = self.foursquareInfo();
+			var content = '<h3>' + info.name + '<br>';
+			content += '<small>';
+			info.categories.forEach(function (category) {
+				content += '<span class="label label-info">' + category.name + '</span> ';
+			});
+			content += '</small>';
+			content += '</h3>';
+			content += '<address>' + info.address + '</address>';
+			content += '<div class="well">';
+			content += '<span class="rating label label-primary">' + info.rating + ' / ';
+			content += '<span class="total">10</span>';
+			content += '</span> ';
+			content += ' Based on ' + info.ratingSignals + ' votes';
+			content += '</div>';
+			content += '<img class="img-responsive" src="' + info.image + '" alt="' + info.name + '">';
+			content += '<br>';
+			content += '<blockquote>';
+			content += '<p>' + info.comment.text + '</p>';
+			content += '<footer>' + info.comment.author + '</footer>';
+			content += '</blockquote>';
+			return content;
+		}
+	}, self);
 
 	self.isActive = ko.computed(function () {
+		console.log(this === this.list.currentLocation());
 		return this === this.list.currentLocation();
 	}, self);
 
@@ -48,6 +79,7 @@ function LocViewModel (location, list) {
 		// Marker and InfoWindow
 		self.marker.setActive();
 		self.marker.bounce(function () {
+			// Do the following after bouncing
 			self.infoWindow.setActive();
 		}); //Set this marker to animate
 	};
@@ -80,8 +112,9 @@ function LocViewModel (location, list) {
 					}
 			};
 			self.foursquareInfo(info);
-			self.infoWindow.updateContent($('#infoWindowTemplate').prop('innerHTML'));
-			console.log(self.infoWindow);
+		})
+		.always(function () {
+			self.infoWindow.updateContent(self.foursquareInfoString());
 		});
 	};
 

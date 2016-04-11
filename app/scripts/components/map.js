@@ -2,6 +2,8 @@
 'use strict';
 var map;
 
+// This is a wrapper of the components (marker, infowindow) on the map.
+// The Google map itself should be map.map
 function Map () {
 	var self = this;
 
