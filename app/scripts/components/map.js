@@ -1,5 +1,5 @@
 /* globals google*/
-/* exported map, Map*/
+/* exported map, Map */
 
 'use strict';
 var map;

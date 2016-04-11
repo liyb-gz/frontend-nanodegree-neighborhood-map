@@ -17,8 +17,9 @@ function LocViewModel (location, list) {
 	self.foursquareInfo = ko.observable(); // Foursquare Information
 	self.foursquareInfoString = ko.computed(function () {
 	//Info Window content string based on self.foursquareInfo
+
 		if (this.foursquareInfo() === undefined) {
-			return 'Sorry, Information about this location cannot be retrieved.';
+			return 'Sorry, the information about this location cannot be retrieved.';
 		} else {
 			// I tried, but I cannot figure out how to bind data to the info window.
 			// So here is the non-knockout way to inject the content into the info window.
