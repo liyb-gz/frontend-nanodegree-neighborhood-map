@@ -1,4 +1,6 @@
-/* globals google, console*/
+/* globals google*/
+/* exported map, Map*/
+
 'use strict';
 var map;
 
@@ -13,9 +15,6 @@ function Map () {
 		zoom: 12 //Default: 12
 	});
 
-	self.markers = [];
-	self.infoWindows = [];
-
 	// Methods
 	self.addMarker = function (locViewModel) {
 		var redMarker = 'http://maps.google.com/mapfiles/ms/icons/red.png';
@@ -29,7 +28,7 @@ function Map () {
 
 		newMarker.animationTimeout = null;
 
-		// Add useful operations to the marker here.
+		// Methods of a marker
 		newMarker.drop = function () {
 			this.setAnimation(google.maps.Animation.DROP);
 		};
@@ -39,7 +38,7 @@ function Map () {
 			this.animationTimeout = setTimeout(function (marker) {
 				marker.setAnimation(null);
 				callback();
-			}, 1400, this); // Marker bouncing: 700ms per circle
+			}, 700 * 2, this); // Marker bouncing: 700ms per circle
 		};
 
 		newMarker.resetAnimation = function () {
@@ -54,17 +53,7 @@ function Map () {
 			this.setIcon(redMarker);
 		};
 
-		self.markers.push(newMarker);
 		return newMarker;
-	};
-
-	// TODO: refactor this function, make use of subscribe
-	self.resetMarkers = function () {
-		self.markers.forEach(function (marker) {
-			marker.resetAnimation();
-			marker.resetActive();
-			clearTimeout(marker.animationTimeout);
-		});
 	};
 
 	self.addInfoWindow = function (locViewModel) {
@@ -80,22 +69,10 @@ function Map () {
 			this.setContent(data);
 		};
 
-		self.infoWindows.push(newInfoWindow);
 		return newInfoWindow;
-	};
-
-	// TODO: refactor this function, make use of subscribe
-	self.resetInfoWindows = function () {
-		self.infoWindows.forEach(function (infoWindows) {
-			infoWindows.close();
-		});
 	};
 
 	self.panTo = function (location) {
 		self.map.panTo(location.coordinates);
 	};
-
-	// Execute
-
-	// Testing
 }

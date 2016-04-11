@@ -1,4 +1,4 @@
-/* globals $, google, ko, console, map*/
+/* globals $, ko, map, Map, ListViewModel*/
 
 (function () {
 	'use strict';

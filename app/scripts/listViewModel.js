@@ -1,4 +1,5 @@
-/* globals console, ko */
+/* globals map, ko, LocViewModel */
+/* exported ListViewModel */
 'use strict';
 
 // @param locations - Array
@@ -42,7 +43,6 @@ function ListViewModel (locations) {
 	};
 
 	// Execute
-
 	// Load locations
 	locations.forEach(function (location) {
 		self.locations.push(new LocViewModel(location, self));

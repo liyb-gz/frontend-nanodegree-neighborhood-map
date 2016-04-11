@@ -1,4 +1,5 @@
-/* globals console, ko, map, $ */
+/* globals ko, map, $ */
+/* exported LocViewModel */
 'use strict';
 
 // @param location - Object
@@ -51,26 +52,39 @@ function LocViewModel (location, list) {
 		return this === this.list.currentLocation();
 	}, self);
 
+	// Listener to the isActive observable
+	self.isActive.subscribe(function (active) {
+		if (active) {
+			// Map
+			map.panTo(self);
+
+			// Marker and InfoWindow
+			self.marker.setActive();
+			self.marker.bounce(function () { //Set this marker to animate
+				// Do the following after bouncing
+				self.infoWindow.setActive();
+			});
+		} else {
+			// Marker
+			self.marker.resetAnimation();
+			self.marker.resetActive();
+			clearTimeout(self.marker.animationTimeout);
+
+			// Info Window
+			self.infoWindow.close();
+		}
+	});
+
 	self.isOnList = ko.computed(function () {
 		return self.list.filteredLocations().indexOf(self) > -1;
 	});
 
-	// self.isActive.subscribe(function (active) {
-	// 	if (active) {
-
-	// 	} else {
-	// 		marker.resetAnimation();
-	// 		marker.resetActive();
-	// 		clearTimeout(marker.animationTimeout);
-	// 	}
-	// });
-
 	// Listener to the isOnList observable
 	self.isOnList.subscribe(function (onList) {
-		// Marker
+		// a marker's visibility depends on whether a location is on the list
 		self.marker.setVisible(onList);
 
-		// If not on the list, reset the active state
+		// If not on the list, then it is no longer active as well
 		if (!onList) {
 			self.resetActive();
 		}
@@ -87,28 +101,11 @@ function LocViewModel (location, list) {
 
 	// Methods
 	self.setActive = function () {
-		// List
 		self.list.setCurrentLocation(self);
-
-		// Map
-		map.panTo(self);
-
-		// Resets
-		map.resetMarkers(); //Stop other animations and reset colors
-		map.resetInfoWindows();
-
-		// Marker and InfoWindow
-		self.marker.setActive();
-		self.marker.bounce(function () {
-			// Do the following after bouncing
-			self.infoWindow.setActive();
-		}); //Set this marker to animate
 	};
 
 	self.resetActive = function () {
 		self.list.setCurrentLocation(undefined);
-		map.resetMarkers();
-		map.resetInfoWindows();
 	};
 
 	// Encapsulate the getJSON request
