@@ -22,3 +22,8 @@ body {
 #map {
 	height: 100%;
 }
+
+// Overwriting Google Maps' default style
+.gm-style .img-responsive {
+	max-width: 100%;
+}

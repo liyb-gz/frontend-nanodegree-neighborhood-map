@@ -22,11 +22,17 @@
 		//Load JSON that stores locations
 		$.getJSON('scripts/models/locations.json', function(json) {
 			locations = json.locations;
+		})
+		.fail(function () {
+			alert('Location data failed to load.');
 		}),
 
 		//Load Google map
 		//key=AIzaSyCOvT4WRm8Y1FRgoZZaKo-7M71f1AbNEvI
 		$.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCOvT4WRm8Y1FRgoZZaKo-7M71f1AbNEvI')
+		.fail(function () {
+			alert('Google map failed to load.');
+		})
 
 	).then(function () {
 		//Init the app when both locations and map are ready

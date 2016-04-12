@@ -1,10 +1,12 @@
 /* globals ko, map, $ */
 /* exported LocViewModel */
-'use strict';
+
 
 // @param location - Object
 // @param list - ListViewModel that contains this LocViewModel
 function LocViewModel (location, list) {
+	'use strict';
+
 	var self = this;
 
 	// These variables don't change, so no need to use observables.
@@ -19,6 +21,8 @@ function LocViewModel (location, list) {
 	//Info Window content string based on self.foursquareInfo
 
 		if (this.foursquareInfo() === undefined) {
+			// Customized error handling for Foursquare API
+			// At least better than the alert window.
 			return 'Sorry, the information about this location cannot be retrieved.';
 		} else {
 			// I tried, but I cannot figure out how to bind data to the info window.

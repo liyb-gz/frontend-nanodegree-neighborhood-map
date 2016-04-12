@@ -6,7 +6,6 @@
 
 	$('#navbar-toggle').click(function(e) {
         e.preventDefault();
-        $('#wrapper').toggleClass('toggled');
     });
 
     $('#filter-form').submit(function(e) {

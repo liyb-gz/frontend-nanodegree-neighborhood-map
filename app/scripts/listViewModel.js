@@ -1,15 +1,17 @@
 /* globals map, ko, LocViewModel */
 /* exported ListViewModel */
-'use strict';
+
 
 // @param locations - Array
 function ListViewModel (locations) {
+	'use strict';
 	var self = this;
 
 	// Define observables
 	self.locations = ko.observableArray();
 	self.currentLocation = ko.observable();
 	self.filterKeyword = ko.observable('');
+	self.isToggled = ko.observable(false);
 
 	self.filteredLocations = ko.computed(function () {
 		return self.locations().filter(function (location) {
@@ -40,6 +42,10 @@ function ListViewModel (locations) {
 
 	self.setCurrentLocation = function (location) {
 		self.currentLocation(location);
+	};
+
+	self.toggle = function () {
+		self.isToggled(!self.isToggled());
 	};
 
 	// Execute

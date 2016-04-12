@@ -1,12 +1,12 @@
 /* globals google*/
 /* exported map, Map */
 
-'use strict';
 var map;
 
 // This is a wrapper of the components (marker, infowindow) on the map.
 // The Google map itself should be map.map
 function Map () {
+	'use strict';
 	var self = this;
 
 	// Variables
@@ -58,6 +58,21 @@ function Map () {
 
 	self.addInfoWindow = function (locViewModel) {
 		var newInfoWindow = new google.maps.InfoWindow({
+			/* A previous reviewer mentioned here:
+			 *
+			 * This doesn't seem to work as expected.
+			 * There's a noticeable delay before infowindow is opened.
+			 * This loading message also doesn't show up.
+			 *
+			 * But this is exactly what I expected.
+			 * This loading message is not supposed to show up,
+			 * unless it takes so much time for the Foursquare API to load,
+			 * that the content is not yet replaced by the real content (in locViewModel.js),
+			 * or the "fail to load" message
+			 *
+			 * Try "GPRS" throttling in Chrome DevTool and click a marker once it appear,
+			 * And you will see this loading message.
+			 */
 			content: 'Loading information...'
 		});
 
